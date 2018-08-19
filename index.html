@@ -5,6 +5,25 @@
   <title></title>
 </head>
 <body>
+  <div id="calc">
+    <div id="display">0</div>
+    <button class="num">7</button>
+    <button class="num">8</button>
+    <button class="num">9</button>
+    <button class="operator" id="divide">&divide;</button>
+    <button class="num">4</button>
+    <button class="num">5</button>
+    <button class="num">6</button>
+    <button class="operator" id="multiply">&times;</button>
+    <button class="num">1</button>
+    <button class="num">2</button>
+    <button class="num">3</button>
+    <button class="operator" id="minus">-</button>
+    <button class="num">0</button>
+    <button>AC</button>
+    <button id="equals">=</button>
+    <button class="operator" id="plus">+</button>
+  </div>
   <script>
     function add(a, b) {
       return a + b;
@@ -25,6 +44,53 @@
     function operate(operator, a, b) {
       return operator(a, b);
     }
+
+    const displayScreen = document.querySelector("#display");
+
+    const numbers = document.querySelectorAll(".num");
+
+    // const operators = document.querySelectorAll(".operator");
+
+    const equals = document.querySelector("#equals");
+
+    const divideButton = document.querySelector("#divide");
+
+    let userEntry = "";
+
+    let firstNum;
+
+    let secondNum;
+
+    let result;
+
+    numbers.forEach(number => {
+      number.addEventListener("click", () => {
+        if (displayScreen.textContent === "0") {
+          displayScreen.textContent = number.textContent;
+        } else {
+          displayScreen.textContent += number.textContent;
+        }
+        userEntry += number.textContent;
+      });
+    });
+
+
+    divideButton.addEventListener("click", () => {
+      firstNum = Number(userEntry);
+      displayScreen.textContent += " ÷ ";
+      userEntry = "";
+      equals.addEventListener("click", () => {
+        secondNum = Number(userEntry);
+        result = divide(firstNum, secondNum);
+        displayScreen.textContent = result;
+      })
+    });
+
+
+
+
+
+
   </script>
 </body>
 </html>
