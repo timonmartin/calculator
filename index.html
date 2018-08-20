@@ -56,54 +56,58 @@
 
     let userEntry = "";
 
-    let firstNum;
+    let values = [];
 
     let chosenOperator;
 
-    let secondNum;
+    let currentResult = 0;
 
-    let result;
+    let finalResult = 0;
 
     numbers.forEach(number => {
       number.addEventListener("click", () => {
         if (displayScreen.textContent === "0") {
-          displayScreen.textContent = number.textContent;
+          displayScreen.textContent = number.textContent; // display the number you pressed if it's the first one
         } else {
-          displayScreen.textContent += number.textContent;
+          displayScreen.textContent += number.textContent; // otherwise add to the numbers you've entered
         }
-        userEntry += number.textContent;
+        userEntry += number.textContent; // store the entered num as a string
       });
     });
 
     operators.forEach(operator => {
       operator.addEventListener("click", () => {
-        firstNum = Number(userEntry);
-        chosenOperator = window[operator.id];
-        displayScreen.textContent += " " + operator.textContent + " ";
-        userEntry = "";
+        if (userEntry != "") {
+          values.push(Number(userEntry)); // prevent a 0 being stored in values array if there's no input from user yet, convert userEntry to a num and store in values
+        }
+        if (values.length == 1) { // if values has only one number then it = running result
+          currentResult = values[0];
+        } else if (values.length >= 2) {
+          currentResult = operate(chosenOperator, currentResult, values[values.length-1]); // calculate running result with latest number entry - last value in values
+        }
+        chosenOperator = window[operator.id]; // select the correct operator function through ids
+        displayScreen.textContent += " " + operator.textContent + " "; // change display to reflect entry
+        userEntry = ""; // reset user input string
       });
     });
 
     equals.addEventListener("click", () => {
-      secondNum = Number(userEntry);
-      result = operate(chosenOperator, firstNum, secondNum);
-      displayScreen.textContent = result;
-      userEntry = result;
-      firstNum = result;
-    })
-
-    /* divideButton.addEventListener("click", () => {
-      firstNum = Number(userEntry);
-      displayScreen.textContent += " ÷ ";
+      if (values.length == 0) {
+        if (userEntry != "") {
+          finalResult = Number(userEntry); // if only one number is entered and = is pressed will keep the number visible
+        }
+      } else {
+        values.push(Number(userEntry));
+        finalResult = operate(chosenOperator, currentResult, values[values.length-1]);
+        values.length = 0; // empty values array
+        values.push(finalResult); // and add finalResult so that you can then perform operations on it
+        currentResult = finalResult; // update running result to reflect the last calculation
+      }
+      displayScreen.textContent = finalResult;
       userEntry = "";
-      equals.addEventListener("click", () => {
-        secondNum = Number(userEntry);
-        result = divide(firstNum, secondNum);
-        displayScreen.textContent = result;
-        firstNum = result;
-        userEntry = result;
-      });
-    }); */
+    }); 
+
+
 
 
 
