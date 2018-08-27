@@ -1,0 +1,62 @@
+html {
+	font-family: 'Montserrat', sans-serif;
+	background-image: url(https://images3.alphacoders.com/581/581876.png);
+}
+
+button {
+	width: 54px;
+	height: 44px;
+	font-size: 16px;
+	margin: 3px 3px;
+	font-weight: bold;
+	border-radius: 6px;
+	border: 1px solid #eb7a7e;
+	outline: none;
+	background-color: #fce9e9;
+	color: #9b171c;
+	box-shadow: 0 0 5px #9b171c; 
+}
+
+.buttonrow {
+	margin: 5px 11px;
+}
+
+.num {
+
+}
+
+.operator {
+
+}
+
+.top {
+
+}
+
+#calc {
+	margin: 15% auto;
+	padding: 10px 2px;
+	width: 340px;
+	height: 320px;
+	background-color: #F09A9D;
+	border-radius: 6px;
+	border: 5px solid #eb7a7e;
+	box-shadow: 0 0 30px black;
+}
+
+#display {
+	width: 295px;
+	height: 50px;
+	text-align: right;
+	margin: 10px auto;
+	font-size: 30px;
+	padding: 2px 4px;
+	border: 5px solid black;
+	line-height: 50px;
+	background-color: white;
+	border-radius: 6px;
+	overflow: hidden;
+	box-shadow: 0 0 8px #9b171c;
+}
+
+

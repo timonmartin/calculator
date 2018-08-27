@@ -2,29 +2,39 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   <title>ULTIMATE INFINITY CALCULATOR</title>
 </head>
 <body>
   <div id="calc">
     <div id="display">0</div>
-    <button class="num">7</button>
-    <button class="num">8</button>
-    <button class="num">9</button>
-    <button class="operator" id="divide">÷</button>
-    <button class="num">4</button>
-    <button class="num">5</button>
-    <button class="num">6</button>
-    <button class="operator" id="multiply">×</button>
-    <button class="num">1</button>
-    <button class="num">2</button>
-    <button class="num">3</button>
-    <button class="operator" id="subtract">-</button>
-    <button class="num">0</button>
-    <button id="clear">AC</button>
-    <button id="equals">=</button>
-    <button class="operator" id="add">+</button>
-    <button class ="num" id="decimal">.</button>
-    <button id="delete">&#8592;</button>
+    <div class="buttonrow" id="top">
+      <button class="num">7</button>
+      <button class="num">8</button>
+      <button class="num">9</button>
+      <button class="operator" id="divide">÷</button>
+    </div>
+    <div class="buttonrow" id="topmid">
+      <button class="num">4</button>
+      <button class="num">5</button>
+      <button class="num">6</button>
+      <button class="operator" id="multiply">×</button>
+    </div>
+    <div class="buttonrow" id="bottommid">
+      <button class="num">1</button>
+      <button class="num">2</button>
+      <button class="num">3</button>
+      <button class="operator" id="subtract">-</button>
+      <button id="delete">&#8592;</button>
+    </div>
+    <div class="buttonrow" id="bottom">
+      <button class="num">0</button>
+      <button id="clear">AC</button>
+      <button id="equals">=</button>
+      <button class="operator" id="add">+</button>
+      <button class ="num" id="decimal">.</button>
+    </div>
   </div>
   <script>
     function add(a, b) {
@@ -60,7 +70,7 @@
     const backspace = document.querySelector("#delete");
 
 
-    let userEntry = "";
+    let userEntry = "0";
 
     let values = [];
 
@@ -75,14 +85,18 @@
         if (displayScreen.textContent === "0") {
           displayScreen.textContent = number.textContent; // display the number you pressed if it's the first one
         } else {
-          displayScreen.textContent += number.textContent; // otherwise add to the numbers you've entered
+          if (userEntry.length < 15) {
+            displayScreen.textContent += number.textContent; // otherwise add to the numbers you've entered
+          }
         }
         if (userEntry.includes(".")) {
           document.getElementById("decimal").disabled = true; // prevent multiple decimals
         } else {
           document.getElementById("decimal").disabled = false;
         }
-        userEntry += number.textContent; // store the entered num as a string
+        if (userEntry.length < 15) {
+          userEntry += number.textContent; // store the entered num as a string
+        }
       });
     });
 
@@ -97,7 +111,7 @@
           currentResult = operate(chosenOperator, currentResult, values[values.length-1]); // calculate running result with latest number entry - last value in values
         }
         chosenOperator = window[operator.id]; // select the correct operator function through ids
-        displayScreen.textContent += " " + operator.textContent + " "; // change display to reflect entry
+        displayScreen.textContent = operator.textContent + " "; // change display to reflect entry
         userEntry = ""; // reset user input string
       });
     });
@@ -115,16 +129,16 @@
         currentResult = finalResult; // update running result to reflect the last calculation
       }
       if (finalResult === Infinity) {
-        displayScreen.textContent = "WTF you tryna do....you can't divide by 0 dingus. Press AC plz.";
+        displayScreen.textContent = "WTF....press AC";
       } else {
-        displayScreen.textContent = finalResult;
+        displayScreen.textContent = finalResult.toString().substring(0, 15);
       }
       userEntry = "";
     }); 
 
     clear.addEventListener("click", () => {
       values.length = 0;
-      userEntry = "";
+      userEntry = "0";
       chosenOperator = null;
       currentResult = 0;
       finalResult = 0;
@@ -140,12 +154,6 @@
         userEntry = "";
       }
     });
-
-
-
-
-
-
   </script>
 </body>
 </html>
